@@ -7,12 +7,12 @@
         <meta charset="UTF-8"/>
         <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
         <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
+        <script th:src="@{/js/rutinas.js}"></script>
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>        
     </head>
     <body>
-        
         <header th:fragment="header" class="header">
             <nav class="navbar navbar-expand-sm p-0">
                 <div class="container">                    
@@ -83,5 +83,44 @@
         <footer th:fragment="footer" class="p-2 mt-5 bg-info text-white">
             <p class="lead text-center">[[#{plantilla.derechos}]] &COPY;</p>
         </footer>
+        
+<section th:fragment="mostrarToast">
+            <div aria-live="polite" aria-atomic="true" 
+                 class="position-fixed top-50 start-50 translate-middle" style="z-index: 1080;">                
+                <div th:if="${error}" class="toast show"
+                     role="alert"
+                     aria-live="assertive"                     
+                     aria-atomic="true"
+                     data-bs-autohide="true">
+                    <div class="toast-header text-white bg-danger">
+                        <i class="fa-solid fa-bomb"></i> <strong clas=me-auto> [[#{error}]]</strong>
+                    </div>
+                    <div class="toast-body">
+                        <p>[[${error}]]</p>
+                        <div class="mt-2 pt-2 border-top text-center">
+                            <button type="button" class="btn btn-secondary btn-sm" 
+                                    data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${todoOk}" class="toast show"
+                     role="status"
+                     aria-live="polite"
+                     aria-atomic="true"
+                     data-bs-autohide="true">
+                    <div class="toast-header text-white bg-success">
+                        <i class="fa-solid fa-square-check"></i> <strong clas=me-auto> [[#{atencion}]]</strong>
+                    </div>
+                    <div class="toast-body">
+                        <p>[[${todoOk}]]</p>
+                        <div class="mt-2 pt-2 border-top text-center">
+                            <button type="button" class="btn btn-secondary btn-sm" 
+                                    data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </body>
 </html>
