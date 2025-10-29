@@ -63,5 +63,41 @@
                 </div>
             </div>
         </section>
+        
+        
+        <section th:fragment="consultas">
+            <div class="row row-cols-4 p-2">
+                <div th:replace="~{consultas/fragmentos :: formularioConsulta('/consultas/consultaDerivada', #{pruebas.ampliadas}, 'primary')}"></div>
+                <div th:replace="~{consultas/fragmentos :: formularioConsulta('/consultas/consultaJPQL', #{pruebas.jpql}, 'warning')}"></div>
+                <div th:replace="~{consultas/fragmentos :: formularioConsulta('/consultas/consultaSQL', #{pruebas.nativo}, 'success')}"></div>
+                <div><div class="card">Acá va su consulta de la tarea #2</div></div>
+            </div>
+        </section>
+
+        <div th:fragment="formularioConsulta(actionUrl, headerText, buttonColor)">
+            <form method="post" th:action="@{${actionUrl}}" class="was-validated">
+                <div class="card p-2">
+                    <div class="card-header text-center text-white" th:classappend="${'bg-' + buttonColor}">
+                        <h5>[[${headerText}]]</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label>[[#{pruebas.precio.inferior}]]</label>
+                            <input type="number" name="precioInf" class="form-control" th:value="${precioInf}" min="0" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label>[[#{pruebas.precio.superior}]]</label>
+                            <input type="number" name="precioSup" class="form-control" th:value="${precioSup}" min="0" required/>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn text-white" th:classappend="${'btn-' + buttonColor}">
+                            <i class="fa-solid fa-magnifying-glass"></i> [[${headerText}]]
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
     </body>
 </html> 

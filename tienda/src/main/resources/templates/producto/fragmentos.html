@@ -106,7 +106,7 @@
                                             <td class="text-center">[[${p.existencias}]]</td>
                                             <td class="text-end">[[${#numbers.formatCurrency(p.precio*p.existencias)}]]</td>
                                             <td><img th:src="@{${p.rutaImagen}}" alt="noData" height="75"/></td>
-                                            <td>[[${p.categoria.descripcion.idCategoria}]]</td>
+                                            <td>[[${p.categoria.descripcion}]]</td>
                                             <td th:text="${p.activo} ? 'Activa':'Inactiva'"></td>
                                             <td>
                                                 <button type="button" class="btn btn-danger"
