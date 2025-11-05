@@ -10,7 +10,7 @@
             <!-- Button trigger modal -->
             <div class='row py-4 mb-2 bg-light'>
                 <div class='col-md-1'></div>
-                <div class='col-md-3'>
+                <div class='col-md-3'  sec:authorize="hasRole('ROLE_ADMIN')">
                     <button type="button" class="btn btn-primary"  sec:authorize="hasRole('ROLE_ADMIN')"
                             data-bs-toggle="modal" data-bs-target="#agregarCategoriaModal">
                         <i class="fa-solid fa-plus"></i> [[#{categoria.agregar}]]</button>
@@ -68,7 +68,7 @@
                                             <th>[[#{categoria.descripcion}]]</th>
                                             <th>[[#{categoria.imagen}]]</th>
                                             <th>[[#{categoria.activo}]]</th>
-                                            <th></th>
+                                            <th sec:authorize="hasRole('ROLE_ADMIN')"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -77,7 +77,7 @@
                                             <td>[[${c.descripcion}]]</td>
                                             <td><img th:src="@{${c.rutaImagen}}" alt="noData" height="75"/></td>
                                             <td th:text="${c.activo} ? 'Activa':'Inactiva'"></td>
-                                            <td>
+                                            <td  sec:authorize="hasRole('ROLE_ADMIN')">
                                                 <button type="button" class="btn btn-danger"
                                                         data-bs-toggle="modal" data-bs-target="#confirmModal"
                                                         th:data-bs-id="${c.idCategoria}"
