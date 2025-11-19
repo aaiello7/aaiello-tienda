@@ -78,7 +78,8 @@
                             <li class="nav-item my-auto">
                                 <form method="post" th:action="@{/logout}">
                                     <button class="btn nav-link" type="submit">
-                                        <i class="fas fa-sign-out-alt"></i>
+                                        <img th:src="@{${session.imageUsuario}}"
+                                             alt="yourname" height="40" class="rounded-circle">
                                         <span class="ms-1">Logout</span>
                                     </button>
                                 </form>
