@@ -1,83 +1,122 @@
 <!-- Fragmento #1 que irá en el head de todas las páginas, así se incluye todo lo necesario de configuración-->
-    <head th:fragment="head">
-        <title>TechShop</title>
-        <meta charset="UTF-8"/>
-        <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png"/>
-        <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png"/>
-        <link rel="icon" type="image/png" sizes="96x96" href="/fav/favicon-96x96.png"/>
-        <link rel="icon" type="image/png" sizes="256x256" href="/fav/favicon-256x256.png"/>
-        <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-        <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
-        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>    
-        <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
-    </head>
+<head th:fragment="head">
+    <title>TechShop</title>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="96x96" href="/fav/favicon-96x96.png"/>
+    <link rel="icon" type="image/png" sizes="256x256" href="/fav/favicon-256x256.png"/>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
+    <script th:src="@{/js/rutinas.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
 
 
 <!-- Fragmento #2  define el encabezado de las páginas, en concreto el menú y enlaces rápidos -->
-        <header th:fragment="header" class="header">
-            <nav class="navbar navbar-expand-sm p-0">
-                <div class="container">                    
-                    <a th:href="@{/}" class="navbar-brand">[[#{aplicacion.titulo}]]</a>
-                    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <ul class="navbar-nav">
-                            <li class="nav-item px-2"><a class="nav-link" th:href="@{/categoria/listado}">[[#{plantilla.categorias}]]</a></li>
-                            <li class="nav-item px-2"><a class="nav-link" th:href="@{/producto/listado}">[[#{plantilla.productos}]]</a></li>
-                            <li class="nav-item px-2"><a class="nav-link" th:href="@{/consultas/listado}">[[#{plantilla.consultas}]]</a></li>                                
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    [[#{plantilla.admin}]]</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" th:href="@{/usuario/listado}">[[#{plantilla.usuarios}]]</a></li>                                    
-                                    <li class="submenu submenu-md dropend">
-                                        <a class="dropdown-item dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                           onclick="event.stopPropagation();">
-                                            [[#{plantilla.seguridad}]]
-                                        </a>
-                                        <ul class="dropdown-menu">                                            
-                                            <li><a class="dropdown-item" th:href="@{/role/listado}">[[#{plantilla.troles}]]</a></li>
-                                            <li><a class="dropdown-item" th:href="@{/usuario_rol/mantenimiento}">[[#{plantilla.permisos}]]</a></li>
-                                            <li><a class="dropdown-item" th:href="@{/ruta/listado}">[[#{plantilla.rutas}]]</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="dropdown-item" th:href="@{/constante/listado}">[[#{plantilla.constantes}]]</a></li>
+<header th:fragment="header" class="header">
+    <nav class="navbar navbar-expand-sm p-0">
+        <div class="container">                    
+            <a th:href="@{/}" class="navbar-brand">[[#{aplicacion.titulo}]]</a>
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item px-2"><a class="nav-link" th:href="@{/categoria/listado}">[[#{plantilla.categorias}]]</a></li>
+                    <li class="nav-item px-2"><a class="nav-link" th:href="@{/producto/listado}">[[#{plantilla.productos}]]</a></li>
+                    <li class="nav-item px-2"><a class="nav-link" th:href="@{/consultas/listado}">[[#{plantilla.consultas}]]</a></li>                                
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                            [[#{plantilla.admin}]]</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/usuario/listado}">[[#{plantilla.usuarios}]]</a></li>                                    
+                            <li class="submenu submenu-md dropend">
+                                <a class="dropdown-item dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                   onclick="event.stopPropagation();">
+                                    [[#{plantilla.seguridad}]]
+                                </a>
+                                <ul class="dropdown-menu">                                            
+                                    <li><a class="dropdown-item" th:href="@{/role/listado}">[[#{plantilla.troles}]]</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/usuario_rol/mantenimiento}">[[#{plantilla.permisos}]]</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/ruta/listado}">[[#{plantilla.rutas}]]</a></li>
                                 </ul>
                             </li>
+                            <li><a class="dropdown-item" th:href="@{/constante/listado}">[[#{plantilla.constantes}]]</a></li>
                         </ul>
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    [[#{plantilla.idioma}]]</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" th:href="@{/(lang=es)}">Español</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/(lang=en)}">English</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/(lang=fr)}">Française</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/(lang=pt)}">Portugaise</a></li>
-                                </ul>
-                            </li>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                            [[#{plantilla.idioma}]]</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/(lang=es)}">Español</a></li>
+                            <li><a class="dropdown-item" th:href="@{/(lang=en)}">English</a></li>
+                            <li><a class="dropdown-item" th:href="@{/(lang=fr)}">Française</a></li>
+                            <li><a class="dropdown-item" th:href="@{/(lang=pt)}">Portugaise</a></li>
                         </ul>
-                        <div id="resultBlock">
-                        </div>         
-                        
-                    </div>
+                    </li>
+                </ul>
+                <div id="resultBlock">
+                </div>         
+
+            </div>
+        </div>
+    </nav>
+    <section id="main-header" class="py-2 bg-success text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><i class="fas fa-cog"></i> [[#{plantilla.suTienda}]]</h1>
                 </div>
-            </nav>
-            <section id="main-header" class="py-2 bg-success text-white">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h1><i class="fas fa-cog"></i> [[#{plantilla.suTienda}]]</h1>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </header>
+            </div>
+        </div>
+    </section>
+</header>
 
 <!-- Fragmento #3  define el footer de las páginas, aparte de esto se podria incluir enlaces a redes socilaes y demás -->
-        <footer th:fragment="footer" class="p-2 mt-5 bg-info text-white">
-            <p class="lead text-center">[[#{plantilla.derechos}]] &COPY;</p>
-        </footer>
+<footer th:fragment="footer" class="p-2 mt-5 bg-info text-white">
+    <p class="lead text-center">[[#{plantilla.derechos}]] &COPY;</p>
+</footer>
+
+<!-- Fragmentos #4 define una ventana tipo Toast para mostrar mensajes al usuario -->
+<section th:fragment="mostrarToast">
+    <div aria-live="polite" aria-atomic="true" 
+         class="position-fixed top-50 start-50 translate-middle" style="z-index: 1080;">                
+        <div th:if="${error}" class="toast show"
+             role="alert"
+             aria-live="assertive"                     
+             aria-atomic="true"
+             data-bs-autohide="true">
+            <div class="toast-header text-white bg-danger">
+                <i class="fa-solid fa-bomb"></i> <strong clas=me-auto> [[#{error}]]</strong>
+            </div>
+            <div class="toast-body">
+                <p>[[${error}]]</p>
+                <div class="mt-2 pt-2 border-top text-center">
+                    <button type="button" class="btn btn-secondary btn-sm" 
+                            data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                </div>
+            </div>
+        </div>
+        <div th:if="${todoOk}" class="toast show"
+             role="status"
+             aria-live="polite"
+             aria-atomic="true"
+             data-bs-autohide="true">
+            <div class="toast-header text-white bg-success">
+                <i class="fa-solid fa-square-check"></i> <strong clas=me-auto> [[#{atencion}]]</strong>
+            </div>
+            <div class="toast-body">
+                <p>[[${todoOk}]]</p>
+                <div class="mt-2 pt-2 border-top text-center">
+                    <button type="button" class="btn btn-secondary btn-sm" 
+                            data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
