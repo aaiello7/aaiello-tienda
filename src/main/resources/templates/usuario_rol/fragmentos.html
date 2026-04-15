@@ -1,0 +1,255 @@
+<section th:fragment="asignar">
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-search"></i> [[#{accion.buscar_usuario}]]</h5>
+        </div>
+        <div class="card-body">
+            <form method="GET"
+                  th:action="@{/usuario_rol/buscar}" 
+                  th:object="${usuario}"
+                  class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label for="usernameInput" class="form-label">[[#{usuario.username}]]</label>
+                    <input type="text" 
+                           id="usernameInput"
+                           name="username" 
+                           th:field="*{username}"
+                           class="form-control"
+                           required/>
+                </div>
+                <div class="col-md-auto">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-search"></i> [[#{accion.buscar}]]
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row" th:if="${usuario != null and usuario.idUsuario != null}">
+        
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-user-circle"></i> [[#{plantilla.tusuario}]]</h5>
+                </div>
+                <div class="card-body text-center">
+                    <img th:src="@{${usuario.rutaImagen}}" 
+                         alt="Imagen de Usuario" 
+                         class="img-fluid rounded-circle mb-3"
+                         style="width: 150px; height: 150px; object-fit: cover;"/>
+                    
+                    <ul class="list-group list-group-flush text-start">
+                        <li class="list-group-item">
+                            <strong>[[#{usuario.username}]]:</strong> [[${usuario.username}]]
+                        </li>
+                        <li class="list-group-item">
+                            <strong>[[#{usuario.nombre}]]:</strong> [[${usuario.nombre}]] [[${usuario.apellidos}]]
+                        </li>
+                        <li class="list-group-item">
+                            <strong>[[#{usuario.correo}]]:</strong> [[${usuario.correo}]]
+                        </li>
+                        <li class="list-group-item">
+                            <strong>[[#{usuario.telefono}]]:</strong> [[${usuario.telefono} ?: '-']]
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-check-circle"></i> [[#{role.usuario}]]</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div th:if="${#lists.isEmpty(rolesAsignados)}" class="p-3 text-center text-muted">
+                        [[#{role.no_asignados}]]
+                    </div>
+                    <table th:unless="${#lists.isEmpty(rolesAsignados)}" class="table table-striped mb-0">
+                        <tbody>
+                            <tr th:each="rol : ${rolesAsignados}">
+                                <td>[[${rol.rol}]]</td> <td sec:authorize="hasRole('ROLE_ADMIN')" class="text-end">
+                                    <form method="get" th:action="@{/usuario_rol/eliminar}">
+                                        <input type="hidden" name="idRol" th:value="${rol.idRol}"/>
+                                        <input type="hidden" name="username" th:value="${usuario.username}"/>
+                                        <button class="btn btn-sm btn-danger" type="submit"
+                                                title="[[#{accion.eliminar_rol}]]">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-plus-square"></i> [[#{role.total}]]</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div th:if="${#lists.isEmpty(rolesDisponibles)}" class="p-3 text-center text-muted">
+                        [[#{role.todos_asignados}]]
+                    </div>
+                    <table th:unless="${#lists.isEmpty(rolesDisponibles)}" class="table table-striped mb-0">
+                        <tbody>
+                            <tr th:each="rol : ${rolesDisponibles}">
+                                <td>[[${rol}]]</td> <td sec:authorize="hasRole('ROLE_ADMIN')" class="text-end">
+                                    <form method="get" th:action="@{/usuario_rol/agregar}">
+                                        <input type="hidden" name="nombreRol" th:value="${rol}"/> 
+                                        <input type="hidden" name="username" th:value="${usuario.username}"/>
+                                        <button class="btn btn-sm btn-success" type="submit"
+                                                title="[[#{accion.agregar_rol}]]">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </form>                                            
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="alert alert-warning" role="alert" th:if="${usuario == null and #request.getParameter('username') != null}">
+        <i class="fas fa-exclamation-triangle"></i> No se encontró ningún usuario con el nombre de usuario **[[${#request.getParameter('username')}]]**.
+    </div>
+
+</section>
+
+<section th:fragment="rutas">
+    
+    <!-- BUSCAR / FILTRAR RUTA -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-route"></i> Gestión de Rutas</h5>
+        </div>
+        <div class="card-body">
+            <form method="GET"
+                  th:action="@{/rutas/buscar}" 
+                  th:object="${ruta}"
+                  class="row g-3 align-items-end">
+                
+                <div class="col-md-4">
+                    <label class="form-label">Nombre Ruta</label>
+                    <input type="text" 
+                           name="nombre"
+                           th:field="*{nombre}"
+                           class="form-control"
+                           placeholder="Buscar ruta..."/>
+                </div>
+
+                <div class="col-md-auto">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </div>
+
+                <div class="col-md-auto">
+                    <a th:href="@{/rutas/nueva}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Nueva Ruta
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- LISTADO DE RUTAS -->
+    <div class="card shadow">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0"><i class="fas fa-list"></i> Lista de Rutas</h5>
+        </div>
+
+        <div class="card-body p-0">
+            
+            <div th:if="${#lists.isEmpty(rutas)}" class="p-3 text-center text-muted">
+                No hay rutas registradas.
+            </div>
+
+            <table th:unless="${#lists.isEmpty(rutas)}" class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="ruta : ${rutas}">
+                        <td>[[${ruta.idRuta}]]</td>
+                        <td>[[${ruta.nombre}]]</td>
+                        <td>[[${ruta.descripcion}]]</td>
+
+                        <td class="text-end">
+                            
+                            <!-- EDITAR -->
+                            <a th:href="@{/rutas/editar/{id}(id=${ruta.idRuta})}" 
+                               class="btn btn-sm btn-warning"
+                               title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+
+                            <!-- ELIMINAR -->
+                            <form method="post" 
+                                  th:action="@{/rutas/eliminar}" 
+                                  style="display:inline;">
+                                <input type="hidden" name="idRuta" th:value="${ruta.idRuta}"/>
+                                <button class="btn btn-sm btn-danger" type="submit"
+                                        onclick="return confirm('¿Eliminar esta ruta?');"
+                                        title="Eliminar">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FORMULARIO CREAR / EDITAR -->
+    <div class="card mt-4 shadow" th:if="${ruta != null}">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">
+                <i class="fas fa-edit"></i> 
+                <span th:text="${ruta.idRuta == null ? 'Crear Ruta' : 'Editar Ruta'}"></span>
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <form method="post" th:action="@{/rutas/guardar}" th:object="${ruta}">
+                
+                <input type="hidden" th:field="*{idRuta}"/>
+
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" th:field="*{nombre}" class="form-control" required/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    <textarea th:field="*{descripcion}" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                    <a th:href="@{/rutas}" class="btn btn-secondary">
+                        Cancelar
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</section>

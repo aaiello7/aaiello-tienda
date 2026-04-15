@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{general/fragmentos :: head}">
+        <title>[[#{plantilla.titulo_gestion_roles}]]</title>
+    </head>
+    <body>
+        <header th:replace="~{general/fragmentos :: header}"/>
+        <section class="container mt-5">
+            <h2 class="mb-4">
+                <i class="fas fa-users-cog"></i> [[#{plantilla.titulo_gestion_roles}]]
+            </h2>
+            
+            <section th:replace="~{usuario_rol/fragmentos :: asignar}"/>
+            
+        </section>
+        <footer th:replace="~{general/fragmentos :: footer}"/>
+    </body>
+</html>

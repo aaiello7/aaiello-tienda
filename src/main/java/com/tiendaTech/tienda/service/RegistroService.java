@@ -1,5 +1,6 @@
 package com.tiendaTech.tienda.service;
 
+import com.tiendaTech.tienda.domain.Constante;
 import com.tiendaTech.tienda.domain.Usuario;
 import jakarta.mail.MessagingException;
 import java.util.Locale;
@@ -17,13 +18,23 @@ public class RegistroService {
     private final CorreoService correoService;
     private final UsuarioService usuarioService;
     private final MessageSource messageSource;
+    private final ConstanteService constanteService;
+    private final String servidor;
 
-    public RegistroService(CorreoService correoService, UsuarioService usuarioService, MessageSource messageSource) {
+    public RegistroService(CorreoService correoService, UsuarioService usuarioService, MessageSource messageSource, ConstanteService constanteService) {
         this.correoService = correoService;
         this.usuarioService = usuarioService;
         this.messageSource = messageSource;
+        this.constanteService = constanteService;
+        Optional<Constante> constante =constanteService.findByAtributo("servidor.http");
+        servidor = constante.isPresent()?constante.get().getValor():"localhost";
     }
 
+    
+    //Ojo cómo le lee una informacion del application.properties
+   // @Value("${servidor.http}")
+    //private String servidor;
+    
     //Este método se usa en el enlace del correo enviado...
     public Model activar(Model model, String username, String clave) {
         Optional<Usuario> usuario = usuarioService.getUsuarioPorUsernameYPassword(username, clave);
@@ -87,10 +98,6 @@ public class RegistroService {
         }
         return clave;
     }
-
-    //Ojo cómo le lee una informacion del application.properties
-    @Value("${servidor.http}")
-    private String servidor;
 
     private void enviaCorreoActivar(Usuario usuario, String clave) throws MessagingException {
         String mensaje = messageSource.getMessage("registro.correo.activar", null, Locale.getDefault());
