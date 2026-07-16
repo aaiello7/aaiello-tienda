@@ -66,16 +66,17 @@
                                 <tr th:each="categoria : ${categorias}">
                                     <td>[[${categoria.idCategoria}]]</td>
                                     <td>[[${categoria.descripcion}]]</td>
-                                    <td><img th:src="@{${categoria.rutaImagen}}" alt="noData" height="75"/></td>
+                                    <td sec:authorize="hasRole('ROLE_ADMIN')">
+                                        <img th:src="@{${categoria.rutaImagen}}" alt="noData" height="75"/></td>
                                     <td th:text="${categoria.activo} ? 'Activa':'Inactiva'"></td>
-                                    <td>
+                                    <td sec:authorize="hasRole('ROLE_ADMIN')">
                                         <button type="button" class="btn btn-danger"
                                                 data-bs-toggle="modal" data-bs-target="#confirmModal"
                                                 th:data-bs-id="${categoria.idCategoria}"
                                                 th:data-bs-descripcion="${categoria.descripcion}">
                                             <i class="fa-solid fa-trash"></i> [[#{accion.eliminar}]]
                                         </button>                                           
-                                        <a th:href="@{/categoria/modificar/}+${categoria.idCategoria}" class="btn btn-warning">
+                                        <a th:href="@{/categoria/modificar/}+${c.idCategoria}" class="btn btn-warning">
                                             <i class="fas fa-pencil-alt"></i> [[#{accion.actualizar}]]
                                         </a>                                                
                                     </td>

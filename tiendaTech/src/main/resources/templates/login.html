@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{general/fragmentos :: head}"/>
+    <body>
+        <header th:replace="~{general/fragmentos :: header}"/>
+        <div class="row my-5">
+            <div class="col-md-4 offset-md-4">
+                <div class="card">
+                    <div class="card-header bg-success text-white text-center">
+                        <h2>[[#{login.login}]]</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" th:action="@{/login}">
+                            <!-- Formulario y campos -->
+                            <div class="row my-3">
+                                <label for="username" class="col-md-1 my-auto"><i class="fas fa-user-lock"></i></label>
+                                <div class="col-md-11 my-auto">
+                                    <input class="form-control" id="username" type="text" name="username" th:placeholder="#{login.username}"/>
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <label for="password" class="col-md-1 my-auto"><i class="fas fa-key"></i></label>
+                                <div class="col-md-11 my-auto">
+                                    <input class="form-control" id="password" type="password" name="password" th:placeholder="#{login.password}"/>
+                                </div>
+                            </div>                            
+                            <!-- Botones y enlaces -->
+                            <div class="d-flex justify-content-around mt-4">
+                                <!-- Enlace de registro (con estilo de botón) -->
+                                <a th:href="@{/registro/nuevo}" class="btn btn-primary"><i class="fas fa-user-plus"></i> [[#{accion.registrar}]]</a>                                
+                                <!-- Enlace para recordar contraseña -->
+                                <a th:href="@{/registro/recordar}" class="btn btn-info"><i class="fas fa-envelope"></i> [[#{accion.recordar}]]</a>                                
+                                <!-- Botón para enviar el formulario -->
+                                <button class="btn btn-success" type="submit"><i class="fas fa-sign-in-alt"></i> [[#{login.login}]]</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Manejo de Errores -->
+                <div th:if="${param.error != null}" class="alert alert-danger mt-3 text-center" role="alert">
+                    [[#{error.login}]]
+                </div>
+            </div>
+        </div>
+        <footer th:replace="~{general/fragmentos :: footer}"/>
+    </body>
+</html>
